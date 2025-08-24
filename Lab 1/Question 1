@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+
+class BankAccount{
+private:
+    float acc_bal;
+public:
+    BankAccount(){
+        acc_bal=0;
+    }
+    BankAccount(float s){
+        acc_bal=s;
+    }
+
+    BankAccount(const BankAccount& other){
+        acc_bal=other.acc_bal;
+    }
+
+    void print(){
+        cout<<"The account balance is: "<<acc_bal<<endl;
+    }
+
+    void withdraw(float w){
+        if (w>0&&w<acc_bal){
+            acc_bal-=w;
+            cout<<"Withdrawal Successful"<<endl;
+        } else{
+            cout<<"Withdrawal Unsuccessful."<<endl;
+        }
+    }
+};
+
+int main(){
+
+    BankAccount acc1;
+    acc1.print();
+
+    BankAccount acc2(1000);
+    acc2.print();
+
+    BankAccount acc3 = acc2;
+    acc3.print();
+    
+    acc3.withdraw(200);
+    acc3.print();
+    acc2.print();
+
+
+    return 0;
+}
