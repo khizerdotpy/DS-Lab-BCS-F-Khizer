@@ -1,0 +1,97 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+/*
+Define attributes such as student name, exam
+date, and score within the class, and include methods to set these attributes and display exam
+details.
+*/
+
+class Exam{
+
+private:
+    char* name;
+    char* date;
+    float score;
+
+public:
+
+    Exam(){
+        name=nullptr;
+        date=nullptr;
+        score=0;
+    }
+
+    void setAttributes(const char* nm,const char* dt,float scr){
+        name = new char[strlen(nm)+1];
+        strcpy(name,nm);
+
+        date=new char[strlen(dt)+1];
+        strcpy(date,dt);
+
+        score=scr;
+    }
+
+    void display(){
+        cout<<"The Student name: "<<name<<endl;
+        cout<<"The Exam date: "<<date<<endl;
+        cout<<"The score achieved in the exam: "<<score<<endl;
+
+    }
+
+    ~Exam(){
+        delete [] name;
+        delete [] date;
+    }
+
+};
+
+int main(){
+
+    Exam s1;
+    s1.setAttributes("Husnain","23/12/2024",89.5f);
+    s1.display();
+
+    cout<<"Default Copy Constructor run(shallow copy) as copy is made."<<endl;
+
+    Exam copy=s1;
+
+    cout<<"Original Exam object: "<<endl;
+    s1.display();
+
+    cout<<"Copied Exam object: "<<endl;
+    copy.display();
+
+    cout<<"Updating the copy object: "<<endl;
+    copy.setAttributes("Asad","11/11/2024",96.5f);
+
+    cout<<"After update: "<<endl;
+
+    cout<<"Original Exam object: "<<endl;
+    s1.display();
+
+    cout<<"Copied Exam object: "<<endl;
+    copy.display();
+
+
+
+
+
+    return 0;
+}
+
+/*
+
+Outputs like these lines:
+
+The score achieved in the exam: 96.5
+The score achieved in the exam: 96.5
+
+The Exam date: 11/11/2024
+The Exam date: 23/12/2024
+
+indicate undefined behavior due to incorrect handling of dynamic memory because we used shallow copy
+the values read are garbage values
+
+*/
