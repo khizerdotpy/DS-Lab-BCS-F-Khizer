@@ -1,0 +1,86 @@
+#include <iostream>
+using namespace std;
+
+class Box{
+
+    private:
+    int *size;
+    public:
+    //default constructor
+    Box(){
+        size = new int(1);
+    }
+    // parameterized constructor
+    Box(int s){
+        size = new int(s);
+    }
+    // deep copy constructor
+    Box(const Box& other){
+        size= new int(*other.size);
+
+    }
+    //copy assignment operator
+    Box& operator=(const Box& other) {
+        if (this != &other) {
+            delete size;
+            size = new int(*other.size);
+        }
+        return *this;
+    }
+
+    ~Box(){
+        delete size;
+    }
+
+    int getSize(){
+        return *size;
+    }
+
+    void setSize(int s){
+        *size=s;
+    }
+};
+
+int main(){
+
+    Box b1;
+
+    cout<<"b1: "<<b1.getSize()<<endl;
+
+    Box b2(5);
+
+    cout<<"b2: "<<b2.getSize()<<endl;
+    
+    Box b3=b2;          // this uses deep copy. b3, new object, is initialized from another object.as we're declaring and initializing b3 in the same line
+
+    cout<<"b3: "<<b3.getSize()<<endl;
+
+    b3.setSize(10);
+
+    cout<<"b3 after set size: "<<b3.getSize()<<endl;
+    cout<<"b2 after set size(should remain unchanged): "<<b2.getSize()<<endl;
+
+
+    Box b4;
+    b4 = b2; 
+    cout << "b4 (assign operator and b2 object used): " << b4.getSize() << endl;
+
+    b4.setSize(20);
+    cout << "b4 after setSize(20): " << b4.getSize() << endl;
+    cout << "b2 should still remain unchanged: " << b2.getSize() << endl;
+
+    /*
+    Box b4;
+    b4=b2            //this uses shallow copy(if copy assignment operator is not defined). 
+                        b4 is already made. we are just assigning the value from b2 to b4
+    
+    b4 is created first, using the default constructor.
+
+    Then, you assign a new value (b2) to an existing object (b4).
+
+    This triggers the copy assignment operator (not the copy constructor).
+    
+    */
+
+    return 0;
+}
