@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    
+   int s;
+   int* arr;
+   cout<<"Enter size of array: "<<endl;
+   cin>>s;
+   arr=new int[s];
+   
+   for(int i=0;i<s;i++){
+       arr[i]=0;
+   }
+   cout<<"\nInitialized the array with 0.\n"<<endl;
+   cout<<"\nThe old array: \n";
+   for(int i=0;i<s;i++){
+       cout<<arr[i]<<endl;
+   }
+   
+   cout<<"\nCustom Updates: \n";
+   
+   while(1){
+       
+       int temp,v;
+       cout<<"Enter the index of the position to update(-1 to exit): ";
+       cin>>temp;
+       if (temp<s&&temp>=0){
+           cout<<"Enter the new integer value: ";
+           cin>>v;
+           arr[temp]=v;
+       } else if (temp==-1) {break;}
+       
+    
+       
+   }
+   
+   cout<<"\nThe new array: \n";
+   
+   for(int i=0;i<s;i++){
+       cout<<arr[i]<<endl;
+   }
+   
+   delete [] arr;
+   
+   
+   
+
+    return 0;
+}
