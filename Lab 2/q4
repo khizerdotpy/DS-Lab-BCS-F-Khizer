@@ -1,0 +1,106 @@
+#include <iostream>
+
+using namespace std;
+
+
+int* resizeArray(int*&oldarr,int oldsize,int newsize){
+    if(newsize==oldsize){
+        return oldarr;
+    }
+    int* newarr= new int[newsize];
+
+    int limit=(oldsize<newsize)?oldsize:newsize;
+    for(int i =0;i<limit;i++){
+        newarr[i]=oldarr[i];
+    }
+
+    delete[] oldarr;
+    return newarr;
+}
+
+
+int totalExpense(int*&arr,int s){
+    int sum=0;
+    for(int i=0;i<s;i++){
+        sum+=arr[i];
+    }
+    return sum;
+}
+
+double averageExpense(int*&arr,int s){
+    double sum=0;
+    for(int i=0;i<s;i++){
+        sum+=arr[i];
+    }
+
+    return (s>0)?sum/s:0;       //returns 0 if s=0
+}
+
+int main(){
+
+    int* arr;
+    int mth;
+    cout<<"Enter number of months: ";
+    cin>>mth;
+    arr=new int[mth];
+
+    for(int i=0;i<mth;i++){
+        cout<<"Enter expense for month "<<i+1<<": ";
+        cin>>arr[i];
+    }
+    int c;
+    do{ 
+        cout<<"\nMENU\n";
+        cout<<"1. Resize Array\n";
+        cout<<"2. Find Total Expenses\n";
+        cout<<"3. Find Average Expenses\n";
+        cout<<"4. Exit\n";
+
+        cin>>c;
+
+        switch(c){
+            case 1:
+            {
+                int ns;
+                cout<<"Enter new amount of months(should be larger than previous amount): ";
+                cin>>ns;
+                arr = resizeArray(arr,mth,ns);
+                //fill new expenses
+                if (ns > mth) {
+                    for (int i = mth; i < ns; i++) {
+                        cout << "Enter expense for month " << i + 1 << ": ";
+                        cin >> arr[i];
+                    }
+                }
+                mth=ns;
+            
+                break;
+            } 
+            case 2:
+            {
+                int sum = totalExpense(arr,mth);
+                cout<<"The total expenses are: $"<<sum<<endl;
+            
+                break;
+            }
+            case 3:
+            {
+                double avg = averageExpense(arr,mth);
+                cout<<"The average expenses are: $"<<avg<<endl;
+            
+                break;
+            }
+            case 4:
+                cout<<"Exiting menu."<<endl;
+                break;
+            default:
+                cout<<"Invalid choice. Try again."<<endl;
+        }
+
+    } while (c!=4);
+
+    delete[] arr;
+
+
+    return 0;
+}
