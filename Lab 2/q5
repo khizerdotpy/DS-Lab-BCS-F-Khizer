@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+
+    int r,c;
+    int** ma;
+    int** mb;
+    int** mc;        //ma matrix a, mb marix b, mc matrix c(result)
+    cout<<"Enter number of Rows, then Columns: ";
+    cin>>r>>c;
+
+    ma=new int*[r];
+    mb=new int*[r];
+    mc=new int*[r];
+
+    for(int i=0;i<r;i++){
+        ma[i]=new int[c];
+        mb[i]=new int[c];
+        mc[i]=new int[c];
+    }
+
+    //inputting matrix a
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            cout<<"Enter element "<<i<<"x"<<j<<": ";
+            cin>>ma[i][j];
+        }
+    }
+
+    //inputting matrix b
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            cout<<"Enter element "<<i<<"x"<<j<<": ";
+            cin>>mb[i][j];
+        }
+    }
+
+    //Addition of matrix
+    cout << "\nMatrix Addition:\n";
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            mc[i][j]=ma[i][j]+mb[i][j];
+            cout<<mc[i][j]<<" | ";
+        }
+        cout<<endl;
+    }
+
+    //Subtraction of matrix
+    cout << "\nMatrix Subtraction:\n";
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            mc[i][j]=ma[i][j]-mb[i][j];
+            cout<<mc[i][j]<<" | ";
+        }
+        cout<<endl;
+    }
+
+
+    //deletion
+    for(int i=r-1;i>=0;i--){
+        delete[] ma[i];
+        delete[] mb[i];
+        delete[] mc[i];
+    }
+    delete[] ma;
+    delete[] mb;
+    delete[] mc;
+
+
+
+
+    return 0;
+}
