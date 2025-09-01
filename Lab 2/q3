@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+
+    int r;
+    int **arr;
+    cout<<"Enter the number of students(less than or equal to 10): ";
+    cin>>r;
+    //creating jagged array
+    arr = new int*[r];
+    int *size;
+    size=new int[r];
+
+    for(int i=0;i<r;i++){
+        cout<<"Enter the number of courses for student "<<i+1<<": ";
+        cin>>size[i];
+        arr[i]= new int[size[i]];
+    }
+
+    //populating jagged array
+    for(int i=0;i<r;i++){
+        cout<<"Enter "<<size[i]<<" marks for student "<<i+1<<": ";
+        for(int j=0;j<size[i];j++){
+            cin>>arr[i][j];
+        }
+    }
+
+    //calculating and displaying average for each student(row)
+    float sum=0;
+    float avg=0;
+    for(int i=0;i<r;i++){
+        sum=0;
+        for(int j=0;j<size[i];j++){
+            sum+=arr[i][j];
+        }
+        avg=sum/size[i];
+        cout<<"The average marks for student "<<i+1<<" are: "<<avg<<endl;
+        
+    }
+
+
+    for(int i=r-1;i>=0;i--){
+        delete [] arr[i];
+    }
+    delete [] arr;
+    
+    return 0;
+}
