@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+    //creating jagged array
+    int r;
+    int **arr;
+    int* size;
+    
+    cout<<"Enter the number of categories: ";
+    cin>>r;
+    size = new int[r];
+    arr = new int*[r];
+    
+    for(int i=0;i<r;i++){
+        cout<<"Enter the number of books in category "<<i+1<<": ";
+        cin>>size[i];
+        arr[i]=new int[size[i]];
+    }
+
+    //populating jagged array
+
+    for(int i=0;i<r;i++){
+        cout<<"Enter "<<size[i]<<" number of Book IDs for category "<<i+1<<": ";
+        for(int j=0;j<size[i];j++){
+            
+            cin>>arr[i][j];
+            
+        }
+        
+    }
+
+    //searching in the array
+    int c;
+    int flag =0;
+    cout<<"Enter the ID you want to search: ";
+    cin>>c;
+    for(int i=0;i<r;i++){
+        for(int j=0;j<size[i];j++){
+            if(arr[i][j]==c){
+                cout<<"Book is available in category "<<i+1<<endl;
+                flag=1;
+            }
+        }
+        
+    }
+    if (!flag){
+        cout<<"Book is not available. Enter a valid ID."<<endl;
+    }
+    
+
+    for(int i=r-1;i>=0;i--){
+        delete[] arr[i];
+    }
+
+    delete[] arr;
+
+
+
+
+    return 0;
+}
