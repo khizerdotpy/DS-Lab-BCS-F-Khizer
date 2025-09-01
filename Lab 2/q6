@@ -1,0 +1,115 @@
+#include <iostream>
+using namespace std;
+
+class  SafePointer{
+
+private:
+    int* ptr;
+
+public:
+    SafePointer(){
+        ptr=new int(-1);        //assigning a placeholder value
+    }
+
+    void setValue(int v){
+
+        if(ptr==nullptr){       //if a new value is being set after release() was called
+            ptr=new int(v);
+        } else{
+            *ptr=v;
+        }
+    }
+
+    int getValue(){
+
+        if(ptr==nullptr){
+            cout<<"Error: Marks for this student have been deleted."<<endl;
+            return -1;
+        }
+        return *ptr;
+    }
+
+    void release(){
+        delete ptr;
+        ptr=nullptr;    //this is done because the program may not exit after release() is called. 
+                        //done to protect dangling pointer and prevent memory corruption
+    }
+
+    ~SafePointer(){
+        delete ptr;
+    }
+
+};
+
+int main(){
+
+    SafePointer students[5];
+
+    int c;
+
+    do{
+        
+        cout<<"\nMenu\n";
+        cout<<"1: Add Student Marks\n";
+        cout<<"2: Get Student Marks\n";
+        cout<<"3: Delete Marks Database\n";
+        cout<<"4: Exit Menu\n";
+
+        cout<<"\nEnter Your Choice: ";
+        cin>>c;
+
+        switch(c){
+            case 1:{
+                int mks=0;
+                for(int i=0;i<5;i++){
+                    cout<<"Enter marks for Student "<<i+1<<": ";
+                    cin>>mks;
+                    if(mks>=0){
+                        students[i].setValue(mks);
+                    } else {
+                        cout<<"Invalid marks.Try again.";
+                    }
+                }
+                break;
+            }
+
+            case 2: {
+
+                int gm; //gm for get marks
+                cout<<"Enter Student number to get marks for that student(1-5): ";
+                cin>>gm;
+                if(students[gm-1].getValue()!=-1){
+                    cout<<"The marks for student "<<gm<<" are: "<<students[gm-1].getValue()<<endl;
+                } else{
+                    cout<<"Please press 1 to add marks.\n";
+                }
+                break;
+            }
+
+            case 3: {
+                for(int i=4;i>=0;i--){
+                    students[i].release();
+                }
+                cout<<"\nDatabase Cleared.\n";
+                break;
+            }
+            case 4: {
+                cout<<"Exiting menu."<<endl;
+                break;
+
+            }
+            default: {
+                cout<<"Invalid choice,try again."<<endl;
+
+                break;
+            }
+
+        }
+
+    } while(c!=4);
+
+
+
+
+    return 0;
+}
