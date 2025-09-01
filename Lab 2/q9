@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+    
+    int r,c;
+    int** arr;
+    cout<<"Enter number of rows,then columns: ";
+    cin>>r>>c;
+
+    arr= new int*[r];
+    for(int i=0;i<r;i++){
+        arr[i]=new int[c];
+    }
+
+    cout<<"\nEntering the matrix elements: \n";
+
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            cout<<"Enter element "<<i<<"x"<<j<<": ";
+            cin>>arr[i][j];
+        }
+    }
+    cout<<"\nDisplaying the matrix elements: \n";
+
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            cout<<arr[i][j]<<" | ";
+        }
+        cout<<endl;
+    }
+    
+    cout<<"\nDisplaying the Comppressed Form(row,column,value): \n";
+    bool nz=false;          //nz as in non zero element. true if found, false if not found
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            if(arr[i][j]!=0){
+                cout<<"("<<i<<","<<j<<","<<arr[i][j]<<")"<<endl;
+                nz=true;
+            }
+        }
+    }
+    if(!nz){
+        cout<<"No non-zero element found in matrix."<<endl;
+    }
+
+
+    //freeing memory
+    for(int i=r-1;i>=0;i--){
+        delete[] arr[i];
+    }
+    delete[] arr;
+
+
+
+    return 0;
+}
