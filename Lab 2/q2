@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    
+   int r,c;
+   int** arr;
+   cout<<"Enter rows, then columns: "<<endl;
+   cin>>r>>c;
+   arr=new int*[r];
+   for(int i=0;i<r;i++){
+       arr[i]=new int[c];
+   }
+   
+   cout<<"\nInitialized the matrix with 0.\n"<<endl;
+   for(int i=0;i<r;i++){
+       for(int j=0;j<c;j++){
+           arr[i][j]=0;
+       }
+   }
+
+    cout<<"\nThe old matrix: \n";
+    for(int i=0;i<r;i++){
+       for(int j=0;j<c;j++){
+           cout<<arr[i][j]<<" ";
+       }
+       cout<<endl;
+   }
+   
+   cout<<"\nCustom Updates: \n";
+   while(1){
+       int rr,cc;
+       cout<<"Enter bench index and seat index to fill seat(-1,-1 to exit): ";
+       cin>>rr>>cc;
+       if ((rr>=0&&rr<r)&&(cc>=0&&cc<c)){
+           arr[rr][cc]=1;
+       } else if((rr==-1)&&(cc==-1)){break;}
+       
+   }
+   
+   cout<<"\nThe new matrix: \n";
+    for(int i=0;i<r;i++){
+       for(int j=0;j<c;j++){
+           cout<<arr[i][j]<<" ";
+       }
+       cout<<endl;
+   }
+   
+   for(int i=(r-1);i>=0;i--){
+       delete [] arr[i];
+   } 
+   delete [] arr;
+   
+
+    return 0;
+}
+
