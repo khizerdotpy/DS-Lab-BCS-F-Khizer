@@ -1,0 +1,75 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+    //creating 2d array
+    int d,t;        //d for day,t for time
+    double** arr;
+    cout<<"Enter number of days,then number of different times in a day: "<<endl;
+    cin>>d>>t;
+
+    if(d <= 0 || t <= 0){
+    cout << "Invalid input for days or times!" << endl;
+    return 0;
+    }
+    
+    arr=new double*[d];
+    for(int i = 0;i<d;i++){
+        arr[i]=new double[t];
+    }
+
+    //populating the 2d array
+    for(int i=0;i<d;i++){
+        for(int j=0;j<t;j++){
+            cout<<"Enter element "<<i<<"x"<<j<<": ";
+            cin>>arr[i][j];
+        }
+    }
+
+    //finding daily average
+    
+    for(int i=0;i<d;i++){
+        double sum=0;
+        double avg=0;
+        for(int j=0;j<t;j++){
+            sum+=arr[i][j];
+        }
+        avg=sum/t;
+        cout<<"The average for day "<<i+1<<" is: "<<avg<<endl;
+    }
+
+    double ht=-10000;
+    double cld=10000;
+    int ni=0;
+    for(int i=0;i<d;i++){
+        for(int j=0;j<t;j++){
+            if(arr[i][j]>ht){
+                ht=arr[i][j];
+                ni=i;
+            }
+        }
+    }
+    cout<<"The hottest day is day "<<ni+1<<" with temperature of: "<<ht<<" °C"<<endl;
+
+    //finding coldest day
+
+    int nii = 0;
+    for(int i=0;i<d;i++){
+        for(int j=0;j<t;j++){
+            if(arr[i][j]<cld){
+                cld=arr[i][j];
+                nii=i;
+            }
+        }
+    }
+    cout<<"The coldest day is day "<<nii+1<<" with temperature of: "<<cld<<" °C"<<endl;
+
+    //deletion
+
+    for(int i=d-1;i>=0;i--){
+        delete[] arr[i];
+    }
+    delete[] arr;
+
+    return 0;
+}
