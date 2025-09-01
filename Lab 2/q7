@@ -1,0 +1,78 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+
+    //creating a jagged array
+    int r;
+    int** arr;
+    int* size;
+    cout<<"Enter number of Departments: ";
+    cin>>r;
+    size=new int[r];
+    arr=new int*[r];
+    for(int i=0;i<r;i++){
+        cout<<"Enter number of Salaries for department "<<i+1<<": ";
+        cin>>size[i];
+        arr[i]=new int[size[i]];
+    }
+
+    //populating the array
+    for(int i=0;i<r;i++){
+        cout<<"Enter "<<size[i]<<" number of salaries for department "<<i+1<<": ";
+        for(int j=0;j<size[i];j++){
+            cin>>arr[i][j];
+        }
+    }
+
+    //calculating the highest salary in each department
+    int max=-100000;
+    for(int i=0;i<r;i++){
+        max=-100000;
+        for(int j=0;j<size[i];j++){
+            if(arr[i][j]>max){
+                max=arr[i][j];
+            }
+        }
+        cout<<"The highest salary in department "<<i+1<<" is: "<<max<<endl;
+    }
+
+    //calculating the department with the overall maximum average salary
+    
+    float *avg;
+    avg=new float[r];
+    for(int i=0;i<r;i++){
+        float sum=0;
+        
+        for(int j=0;j<size[i];j++){
+            sum+=arr[i][j];
+        }
+        avg[i]=sum/size[i];
+    }
+
+    for(int i=0;i<r;i++){
+        cout<<avg[i]<<" | ";
+    }
+    cout<<endl;
+
+    int nmax=-100000;
+    int ni=0;
+    for(int i=0;i<r;i++){
+        if(avg[i]>nmax){
+            nmax=avg[i];
+            ni=i;
+        }
+    }
+    cout<<"The overall maximum salary is in department "<<ni+1<<": $ "<<nmax<<endl;
+
+
+    for(int i=r-1;i>=0;i--){
+        delete [] arr[i];
+    }
+    delete[] arr;
+
+
+
+
+    return 0;
+}
