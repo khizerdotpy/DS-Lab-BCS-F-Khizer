@@ -46,9 +46,11 @@ int main(){
         int s=r+1;
         int* temp=new int[s];
         int free=0;
-        for(int i=0;i<s;i++){
+        for(int i=0;i<r;i++){
             temp[i]=arr[i];
+            
         }
+        temp[s]=0;
         for(int i=0;i<s;i++){
             if(temp[i]<rnum){
                 free=i;
@@ -58,7 +60,7 @@ int main(){
             temp[i]=temp[i-1];
             
         }
-        temp[free]=rnum;
+        temp[free+1]=rnum;
         
         for(int i=0;i<r+1;i++){
             cout<<temp[i]<<" ";
