@@ -7,79 +7,79 @@ public:
     Node* next;
 };
 
-class LinkedList{
+class LinkedList {
 private:
     Node* head;
     Node* tail;
 public:
-    LinkedList(){
-        head=nullptr;
-        tail=nullptr;
+    LinkedList() {
+        head = nullptr;
+        tail = nullptr;
     }
 
-    void createList(int* a,int n){
-        Node* temp=nullptr;
-        temp=new Node;
-        temp->data=a[0];
-        temp->next=nullptr;
-        if(head==nullptr){
-            head=temp;
+    ~LinkedList() {
+        Node* current = head;
+        while (current != nullptr) {
+            Node* nextNode = current->next;
+            delete current;
+            current = nextNode;
         }
-        tail=head;
-        for(int i=1;i<n;i++){
-            temp= new Node;
-            temp->data=a[i];
-            temp->next=nullptr;
-            tail->next=temp;
-            tail=temp;
-        }
-        
+        head = nullptr;
+        tail = nullptr;
     }
 
-    void display(){
-        Node* p=head;
-        while(p!=nullptr){
-            cout<<p->data<<"->";
-            p=p->next;
+    void createList(int* a, int n) {
+        if (n <= 0) return;
+        Node* temp = new Node;
+        temp->data = a[0];
+        temp->next = nullptr;
+        head = temp;
+        tail = head;
+        for (int i = 1; i < n; i++) {
+            temp = new Node;
+            temp->data = a[i];
+            temp->next = nullptr;
+            tail->next = temp;
+            tail = temp;
         }
-        cout<<"NULL";
     }
-    
-    bool isPalindrome(){
 
-        Node* slow=head;
-        Node* fast=head;
-        while(fast!=nullptr && fast->next!=nullptr){
-            slow=slow->next;
-            fast=fast->next->next;
+    void display() {
+        Node* p = head;
+        while (p != nullptr) {
+            cout << p->data << "->";
+            p = p->next;
         }
+        cout << "NULL";
+    }
 
-        Node* p=slow;
-        Node* q=nullptr;
-        Node* r=nullptr;
-        while(p!=nullptr){
-            r=q;
-            q=p;
-            p=p->next;
-            q->next=r;
+    bool isPalindrome() {
+        if (!head || !head->next) return true;
+        Node* slow = head;
+        Node* fast = head;
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
-        slow=q;
-        p=head;
-
-        while(slow!=nullptr){
-            if(p->data==slow->data){
-                p=p->next;
-                slow=slow->next;
-            } else {
+        Node* p = slow;
+        Node* q = nullptr;
+        Node* r = nullptr;
+        while (p != nullptr) {
+            r = q;
+            q = p;
+            p = p->next;
+            q->next = r;
+        }
+        slow = q;
+        p = head;
+        while (slow != nullptr) {
+            if (p->data != slow->data)
                 return false;
-            }
+            p = p->next;
+            slow = slow->next;
         }
         return true;
-        
-        
     }
-
-
 };
 
 int main() {
@@ -87,24 +87,26 @@ int main() {
 
     int r;
     int* arr;
-    cout<<"Enter number of elements of linked list: ";
-    cin>>r;
-    arr=new int[r];
+    cout << "Enter number of elements of linked list: ";
+    cin >> r;
 
-    for(int i=0;i<r;i++){
-        cout<<"Enter element "<<i+1<<": ";
-        cin>>arr[i];
+    arr = new int[r];
+    for (int i = 0; i < r; i++) {
+        cout << "Enter element " << i + 1 << ": ";
+        cin >> arr[i];
     }
-    
 
     l1.createList(arr, r);
     l1.display();
     cout << endl;
 
-    if (l1.isPalindrome())
+    if (l1.isPalindrome()){
         cout << "\nThe linked list is a palindrome.\n";
-    else
+    }else {
         cout << "\nThe linked list is NOT a palindrome.\n";
+    }
+    
+    delete[] arr;
 
     return 0;
 }
