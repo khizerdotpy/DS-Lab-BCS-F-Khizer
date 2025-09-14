@@ -1,0 +1,96 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node *next;
+    Node *child;
+
+    Node(int value) : data(value), next(nullptr), child(nullptr) {}
+};
+
+class List {
+public:
+    Node *head;
+
+    List() : head(nullptr) {}
+    List(Node *h) : head(h) {}
+
+    void createList(int* arr, int n){
+        if(n <= 0) return;
+        head = new Node(arr[0]);
+        Node* temp = head;
+        for(int i = 1; i < n; i++){
+            temp->next = new Node(arr[i]);
+            temp = temp->next;
+        }
+    }
+
+    void printList(){
+        Node *parser = head;
+        while(parser != nullptr){
+            cout << parser->data << " -> ";
+            parser = parser->next;
+        }
+        cout << "NULL" << endl;
+    }
+
+    ~List(){
+        Node *parser = head;
+        while(parser != nullptr){
+            Node *nextNode = parser->next;
+            Node *childNode = parser->child;
+            while(childNode != nullptr){
+                Node *nextChild = childNode->next;
+                delete childNode;
+                childNode = nextChild;
+            }
+            delete parser;
+            parser = nextNode;
+        }
+    }
+};
+
+Node *flattenList(Node *head){
+    if(head == nullptr) return nullptr;
+    Node *current = head;
+    while(current != nullptr){
+        if(current->child != nullptr){
+            Node *nextNode = current->next;
+            Node *childHead = flattenList(current->child);
+            current->next = childHead;
+            current->child = nullptr;
+            Node *childTemp = childHead;
+            while(childTemp->next != nullptr)
+                childTemp = childTemp->next;
+            childTemp->next = nextNode;
+        }
+        current = current->next;
+    }
+    return head;
+}
+
+int main(){
+    int n;
+    cout << "Enter number of elements in main list: ";
+    cin >> n;
+    int* arr = new int[n];
+    for(int i = 0; i < n; i++){
+        cout << "Enter element " << i+1 << ": ";
+        cin >> arr[i];
+    }
+
+    List l1;
+    l1.createList(arr, n);
+
+    l1.head->next->child = new Node(8);
+    l1.head->next->child->next = new Node(9);
+
+    cout << "\nFlattening the multilevel linked list: \n";
+    l1.head = flattenList(l1.head);
+    l1.printList();
+
+    delete[] arr;
+    return 0;
+}
