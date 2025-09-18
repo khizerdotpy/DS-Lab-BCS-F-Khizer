@@ -1,0 +1,86 @@
+#include <iostream>
+using namespace std;
+
+int interpolationSearch(int* arr, int n, int target) {
+    int low = 0, high = n - 1;
+
+    while (low <= high && target >= arr[low] && target <= arr[high]) {
+        if (arr[high] == arr[low]) {
+            if (arr[low] == target){
+                return low;
+            } else {
+                break;
+            }
+        }
+        int pos = low + ((target - arr[low]) * (high - low)) / (arr[high] - arr[low]);
+        if (arr[pos] == target)
+            return pos;
+        else if (arr[pos] < target)
+            low = pos + 1;
+        else
+            high = pos - 1;
+    }
+
+
+
+    return -1;
+
+
+}
+
+void selectionSort(int* a,int n){
+
+    int minimum;
+    for(int i=0;i<n-1;i++){
+        minimum=i;
+        for(int j=i+1;j<n;j++){
+            if(a[j]<a[minimum]){
+                minimum=j;
+            }
+        }
+
+        int temp=a[i];
+        a[i]=a[minimum];
+        a[minimum]=temp;
+    }
+
+
+}
+
+int main(){
+
+    int r;
+    int* arr;
+    cout<<"Enter number of array elements: ";
+    cin>>r;
+
+    arr = new int[r];
+
+    for (int i=0;i<r;i++){
+        cout<<"Enter element number "<<i+1<<" : ";
+        cin>>arr[i];
+    }
+
+    selectionSort(arr,r);
+    cout<<"\nSorted Array: "<<endl;
+    for(int c=0;c<r;c++){
+        cout<<arr[c];
+    }
+    cout<<endl;
+
+
+    int target;
+    cout << "Enter value to search: ";
+    cin >> target;
+
+    int found = interpolationSearch(arr, r, target);
+
+    if (found != -1){
+        cout << "Target found at index: " << found+1 << endl;
+    } else {
+        cout << "Target not found in the array." << endl;
+    }
+    delete[] arr;
+    
+    return 0;
+}
