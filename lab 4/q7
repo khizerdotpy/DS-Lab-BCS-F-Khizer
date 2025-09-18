@@ -1,0 +1,120 @@
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <chrono>
+using namespace std;
+using namespace std::chrono;
+
+void swapInts(int& a, int& b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void bubbleSort(vector<int> arr, int& comps, int& swaps, double& timeTaken) {
+    auto start = high_resolution_clock::now();
+
+    comps = 0;
+    swaps = 0;
+    int n = arr.size();
+
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            comps++;
+            if (arr[j] > arr[j + 1]) {
+                swapInts(arr[j], arr[j + 1]);
+                swaps++;
+            }
+        }
+    }
+
+    auto end = high_resolution_clock::now();
+    timeTaken = duration_cast<milliseconds>(end - start).count();
+}
+
+void insertionSort(vector<int> arr, int& comps, int& swaps, double& timeTaken) {
+    auto start = high_resolution_clock::now();
+
+    comps = 0;
+    swaps = 0;
+    int n = arr.size();
+
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+
+        while (j >= 0) {
+            comps++;
+            if (arr[j] > key) {
+                arr[j + 1] = arr[j];
+                swaps++;
+            } else {
+                break;
+            }
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+
+    auto end = high_resolution_clock::now();
+    timeTaken = duration_cast<milliseconds>(end - start).count();
+}
+
+void shellSort(vector<int> arr, int& comps, int& swaps, double& timeTaken) {
+    auto start = high_resolution_clock::now();
+
+    comps = 0;
+    swaps = 0;
+    int n = arr.size();
+
+    for (int gap = n / 2; gap > 0; gap /= 2) {
+        for (int i = gap; i < n; i++) {
+            int temp = arr[i];
+            int j = i;
+
+            while (j >= gap) {
+                comps++;
+                if (arr[j - gap] > temp) {
+                    arr[j] = arr[j - gap];
+                    swaps++;
+                    j -= gap;
+                } else {
+                    break;
+                }
+            }
+
+            arr[j] = temp;
+        }
+    }
+
+    auto end = high_resolution_clock::now();
+    timeTaken = duration_cast<milliseconds>(end - start).count();
+}
+
+int main() {
+    const int SIZE = 1000;
+    vector<int> data(SIZE);
+
+    srand(time(0));
+    for (int i = 0; i < SIZE; i++) {
+        data[i] = rand() % 10000;
+    }
+
+    int bComps = 0, bSwaps = 0;
+    int iComps = 0, iSwaps = 0;
+    int sComps = 0, sSwaps = 0;
+    double bTime = 0, iTime = 0, sTime = 0;
+
+    bubbleSort(data, bComps, bSwaps, bTime);
+    insertionSort(data, iComps, iSwaps, iTime);
+    shellSort(data, sComps, sSwaps, sTime);
+
+    cout << "\nSorting Performance (Array size: " << SIZE << ")\n";
+    cout << "--------------------------------------------------\n";
+    cout << "Bubble Sort:     " << bTime << " ms | " << bComps << " comps | " << bSwaps << " swaps\n";
+    cout << "Insertion Sort:  " << iTime << " ms | " << iComps << " comps | " << iSwaps << " swaps\n";
+    cout << "Shell Sort:      " << sTime << " ms | " << sComps << " comps | " << sSwaps << " swaps\n";
+
+    return 0;
+}
