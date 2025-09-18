@@ -1,0 +1,45 @@
+#include <iostream>
+
+using namespace std;
+
+void bubbleSort(int* a, int s){
+    int temp;
+    for(int i=0;i<s-1;i++){
+        for(int j=0;j<s-i-1;j++){
+            if(a[j]>a[j+1]){
+                temp=a[j];
+                a[j]=a[j+1];
+                a[j+1]=temp;
+            }
+        }
+    }
+}
+
+int main(){
+
+    int r;
+    int* arr;
+    cout<<"Enter number of array elements: ";
+    cin>>r;
+
+    arr = new int[r];
+
+    for (int i=0;i<r;i++){
+        cout<<"Enter element number "<<i+1<<" : ";
+        cin>>arr[i];
+    }
+
+    cout<<"Unsorted Array: "<<endl;
+    for(int c=0;c<r;c++){
+        cout<<arr[c];
+    }
+
+    bubbleSort(arr,r);
+
+    cout<<"\nSorted Array: "<<endl;
+    for(int c=0;c<r;c++){
+        cout<<arr[c];
+    }
+
+    return 0;
+}
