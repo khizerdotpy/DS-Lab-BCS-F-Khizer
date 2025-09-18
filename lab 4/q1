@@ -31,6 +31,7 @@ int main(){
 
     linearSearch(arr,r,val);
 
+    delete[] arr;
 
     return 0;
 }
