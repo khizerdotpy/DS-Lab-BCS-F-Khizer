@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+
+int sumTail(int n, int total){
+    if(n==0){
+        return total;
+    } else {
+
+        return sumTail(n-1,total+n);
+    }
+}
+
+int sumnonTail(int n){
+    if(n==0){
+        return n;
+    } else {
+
+        return n+sumnonTail(n-1);
+    }
+}
+
+
+
+int main() {
+    int n;
+    cout<<"enter number(greater than 0): ";
+    cin>>n;
+    if(n!=0){
+        int sum=sumTail(n,0);
+        cout<<"sum: "<<sum<<endl;
+        
+        int nontail=sumnonTail(n);
+        cout<<"non tai sum: "<<sum<<endl;
+    } else {
+        cout<<"positive integers only";
+    }
+
+
+    return 0;
+}
+
+/*
+    Tail Resursion:
+   The recursive call is the last action in the function before
+   returning the result.
+
+    The stack frame can be discarded immediately after each call,
+    which prevents the stack from growing unnecessarily.
+    
+    Non Tail Resursion:
+    The recursive call is followed by an operation (like addition)
+    after returning.
+
+    The stack accumulates a new frame for each call, waiting for the
+    previous one to finish before it can return.
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
