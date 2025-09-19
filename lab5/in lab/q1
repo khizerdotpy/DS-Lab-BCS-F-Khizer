@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+int calcFactorial(int n){
+    if(n==0||n==1) return 1;
+    return n*calcFactorial(n-1);
+}
+
+int main() {
+    int n;
+    cout<<"enter number to calculate factorial of: ";
+    if(n>=0){
+        cin>> n;
+    } else {
+        cout<<"error,enter a positive integer";
+    }
+    
+    int fac=calcFactorial(n);
+    cout<<"Factorial of "<<n<<" is: "<<fac<<endl;
+
+    return 0;
+}
