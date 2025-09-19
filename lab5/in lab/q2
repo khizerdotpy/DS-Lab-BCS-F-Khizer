@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+
+void functionA(int n);
+void functionB(int n);
+
+void printNumbers(int n){
+    if(n>=1){
+        cout<<n<<endl;
+        printNumbers(n-1);
+    }
+}
+
+
+void functionA(int n){
+    if(n>=1){
+        functionB(n-1);
+        cout<<"B:"<<n<<endl;
+        //functionA(n-1);
+    }
+    
+}
+void functionB(int n){
+    if(n>=1){
+        functionA(n-1);
+        cout<<"A:"<<n<<endl;
+        //functionB(n-1);
+    }
+    
+}
+
+
+
+int main() {
+    int n;
+    cout<<"enter number(greater than 0): ";
+    cin>>n;
+    if(n!=0){
+        cout<<"\nDirect\n";
+    
+        printNumbers(n);
+        cout<<"\nInDirect\n";
+        functionA(n);
+    } else {
+        cout<<"positive integers only";
+    }
+
+
+    return 0;
+}
